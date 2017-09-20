@@ -22,6 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+NODE_LIST_FILE=./nodes.txt
 
 # Simple check to see if jq is installed
 if ! [ -x "$(command -v "jq")" ]; then
@@ -29,9 +30,10 @@ if ! [ -x "$(command -v "jq")" ]; then
   exit 1
 fi
 
-if [ -e ./nodes.txt ]
+# Load the Node addresses from file, each line is a wallet address used by a node
+if [ -e $NODE_LIST_FILE ]
 then
-    echo Checking $(cat ./nodes.txt | wc -l) nodes ...
+    echo Checking $(cat $NODE_LIST_FILE | wc -l) nodes ...
 else
     echo "File ./nodes.txt not found, create it with one line per address you want to check"
     exit 1
