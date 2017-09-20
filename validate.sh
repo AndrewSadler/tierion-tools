@@ -29,7 +29,8 @@ if ! [ -x "$(command -v "jq")" ]; then
   exit 1
 fi
 
-# Add one new line in here for each node ETH address you want to validate. e.g.
+# Add one new line in the list variable below for each node ETH address you want to validate. 
+# e.g.
 # LIST=(
 # '0x9Be97c6bec789C1033114fa2BF5450000000062D' \
 # '0x9Be97c6bec789C1033114fa2BF54500000000001' \
@@ -52,3 +53,9 @@ for i in "${LIST[@]}"
 do
     echo $i - $(isNodeValid $i)
 done
+
+echo ""
+echo "**************************"
+echo "If this tool has been useful to you, all small donations are gratefully received"
+echo "ETH / TNT / Any other ERC20 token: 0x18806d634525c9Ae8c9fa98f91803A4aE4807030"
+echo "**************************"
