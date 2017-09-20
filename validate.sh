@@ -29,18 +29,13 @@ if ! [ -x "$(command -v "jq")" ]; then
   exit 1
 fi
 
-# Add one new line in the list variable below for each node ETH address you want to validate. 
-# e.g.
-# LIST=(
-# '0x9Be97c6bec789C1033114fa2BF5450000000062D' \
-# '0x9Be97c6bec789C1033114fa2BF54500000000001' \
-# ...
-# '0x9Be97c6bec789C1033114fa2BF5450000000000f' \
-# ) 
-
-LIST=(
-'0x9Be97c6bec789C1033114fa2BF545aaE720f062D' \
-)
+if [ -e nodes.txt ]
+then
+    echo Checking $(cat ./nodes.txt | wc -l) nodes ...
+else
+    echo "File ./nodes.txt not found, create it with one line per address you want to check"
+    exit 1
+fi
 
 function isNodeValid() {
     curl -s https://b.chainpoint.org/nodes/$1 | \
@@ -49,10 +44,12 @@ function isNodeValid() {
         jq 'reduce .[].result as $item (true; . and $item)'
 }
 
-for i in "${LIST[@]}"
+while read i
 do
-    echo $i - $(isNodeValid $i)
-done
+    if [ ! -z "$i" ]; then
+        echo $i - $(isNodeValid $i)
+    fi
+done < nodes.txt
 
 echo ""
 echo "**************************"
