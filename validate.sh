@@ -29,7 +29,7 @@ if ! [ -x "$(command -v "jq")" ]; then
   exit 1
 fi
 
-if [ -e nodes.txt ]
+if [ -e ./nodes.txt ]
 then
     echo Checking $(cat ./nodes.txt | wc -l) nodes ...
 else
